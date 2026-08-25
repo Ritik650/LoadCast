@@ -1,0 +1,56 @@
+{
+  "classification": [
+    {
+      "model": "Logistic regression",
+      "auc": 0.7606608058608058,
+      "f1": 0.6481257557436517
+    },
+    {
+      "model": "Decision tree",
+      "auc": 0.7349128205128204,
+      "f1": 0.6305970149253731
+    },
+    {
+      "model": "Random forest",
+      "auc": 0.7597040293040294,
+      "f1": 0.6513931888544892
+    },
+    {
+      "model": "LightGBM (numeric)",
+      "auc": 0.7618207570207571,
+      "f1": 0.6539408866995073
+    },
+    {
+      "model": "LightGBM + categoricals",
+      "auc": 0.7521938949938951,
+      "f1": 0.6498194945848376
+    }
+  ],
+  "onset": [
+    {
+      "model": "Mean baseline",
+      "mae": 7.614793650793652,
+      "skill": 0.0
+    },
+    {
+      "model": "Ridge regression",
+      "mae": 2.9714285714285715,
+      "skill": 0.6097821283549982
+    },
+    {
+      "model": "Random forest",
+      "mae": 2.6228571428571428,
+      "skill": 0.6555576863748926
+    },
+    {
+      "model": "LightGBM L2",
+      "mae": 2.76,
+      "skill": 0.637547630760508
+    },
+    {
+      "model": "LightGBM L1 (chosen)",
+      "mae": 2.658095238095238,
+      "skill": 0.6509301026406411
+    }
+  ]
+}
