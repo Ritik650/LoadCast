@@ -1,0 +1,134 @@
+{
+  "n_train_athletes": 3000,
+  "n_test_athletes": 1100,
+  "n_hourly_rows": 19426808,
+  "injury_rate": 0.35,
+  "n_injured": 1050,
+  "onset_mean": 15.326666666666666,
+  "recovery_mean": 11.545714285714286,
+  "recovery_std": 3.8903348392366155,
+  "onset_hist_5day": [
+    139,
+    196,
+    168,
+    189,
+    139,
+    219
+  ],
+  "recovery_hist_2day": [
+    52,
+    123,
+    188,
+    170,
+    185,
+    182,
+    56,
+    94
+  ],
+  "injury_rate_by_sport": {
+    "Athletics": 0.322,
+    "Badminton": 0.365,
+    "Basketball": 0.363,
+    "Football": 0.364,
+    "Tennis": 0.325,
+    "Volleyball": 0.362
+  },
+  "injury_rate_by_prior_injury": {
+    "0": {
+      "rate": 0.355,
+      "n": 1630
+    },
+    "1": {
+      "rate": 0.344,
+      "n": 1008
+    },
+    "2": {
+      "rate": 0.322,
+      "n": 292
+    },
+    "3": {
+      "rate": 0.492,
+      "n": 63
+    },
+    "4": {
+      "rate": 0.0,
+      "n": 5
+    },
+    "5": {
+      "rate": 0.0,
+      "n": 1
+    },
+    "6": {
+      "rate": 0.0,
+      "n": 1
+    }
+  },
+  "coverage_pct": {
+    "dailyActivity_merged.csv": 100.0,
+    "sleepDay_merged.csv": 100.0,
+    "weightLogInfo_merged.csv": 83.5,
+    "training_sessions.csv": 100.0,
+    "hourlyHeartrate_merged.csv": 100.0
+  },
+  "sedentary_unique_values": 1,
+  "sedentary_value": 1200,
+  "tracker_equals_total_pct": 100.0,
+  "sleep_records_unique": [
+    1
+  ],
+  "daily_nulls": 0,
+  "daily_dupes": 0,
+  "sleep_nulls": 0,
+  "weight_fat_null_pct": 69.43102522812667,
+  "weight_logs_median": 3.0,
+  "daily_rows": 180000,
+  "load_ramp_around_onset": {
+    "-14": 323.7,
+    "-13": 330.0,
+    "-12": 335.1,
+    "-11": 340.8,
+    "-10": 349.6,
+    "-9": 358.0,
+    "-8": 364.5,
+    "-7": 369.5,
+    "-6": 375.5,
+    "-5": 379.2,
+    "-4": 386.3,
+    "-3": 394.9,
+    "-2": 404.9,
+    "-1": 410.7,
+    "0": 248.7,
+    "1": 249.2,
+    "2": 248.9,
+    "3": 249.0,
+    "4": 248.9,
+    "5": 251.4,
+    "6": 253.7,
+    "7": 257.1,
+    "8": 261.8,
+    "9": 265.8,
+    "10": 269.6,
+    "11": 274.3,
+    "12": 278.5,
+    "13": 283.0,
+    "14": 285.5
+  },
+  "acwr_injured": 1.050732981917317,
+  "acwr_healthy": 1.0002609204856119,
+  "max_abs_corr_onset_day_offset": 0.8553160310251054,
+  "top_corr_onset_day_offset": {
+    "monotony": 0.855,
+    "acwr_3_21": 0.855,
+    "rhr_last7_delta": 0.855,
+    "strain": 0.854,
+    "hrr_slope": 0.851
+  },
+  "max_abs_corr_recovery_duration": 0.057689161599884985,
+  "top_corr_recovery_duration": {
+    "wt_change": 0.058,
+    "max_streak": 0.054,
+    "sleep_debt": 0.053,
+    "sleep_mean": 0.049,
+    "wt_n_logs": 0.047
+  }
+}
