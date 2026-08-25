@@ -1,0 +1,10 @@
+# Pinned to the exact versions the shipped models/loadcast_models.pkl was
+# written under. scikit-learn pickles are NOT forward-compatible: on a newer
+# scikit-learn (observed on 1.8) loading this bundle fails with
+# AttributeError: 'SimpleImputer' object has no attribute '_fill_dtype'.
+# Pin these versions, or retrain with train_model.py.
+scikit-learn==1.6.1
+lightgbm==4.6.0
+pandas==2.2.3
+numpy==2.2.4
+joblib==1.4.2
