@@ -25,3 +25,6 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# Organisers's problem statement PDF (their material, not ours to redistribute)
+6a8b41d2be715_playhack_ml_ps.pdf
