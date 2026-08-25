@@ -1,0 +1,1152 @@
+<title>Loadcast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+
+<style>
+/* ============================================================== tokens */
+:root{
+  --paper:#ffffff; --ground:#e9e7e8;
+  --ink:#0a0a0b; --ink-2:#494c54; --ink-3:#777b85;
+  --rule:#0a0a0b; --hair:#d5d6dc;
+  --mag:#ff2d62; --mag-ink:#ffffff;
+  --yel:#ffe500; --yel-ink:#0a0a0b;
+  --blu:#0047ff; --blu-ink:#ffffff;
+  --grn:#0a7d55; --amb:#a86800;
+  --bar:#0a0a0b; --bar-ink:#ffffff;
+  --wash:#f5f4f6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#121216; --ground:#08080a;
+    --ink:#f2f2f4; --ink-2:#a9acb5; --ink-3:#7d818a;
+    --rule:#f2f2f4; --hair:#31333a;
+    --mag:#ff5c85; --mag-ink:#16070c;
+    --yel:#ffe500; --yel-ink:#0a0a0b;
+    --blu:#7fa0ff; --blu-ink:#06102e;
+    --grn:#3ec99a; --amb:#e0a233;
+    --bar:#f2f2f4; --bar-ink:#121216;
+    --wash:#1a1b20;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#121216; --ground:#08080a;
+  --ink:#f2f2f4; --ink-2:#a9acb5; --ink-3:#7d818a;
+  --rule:#f2f2f4; --hair:#31333a;
+  --mag:#ff5c85; --mag-ink:#16070c;
+  --yel:#ffe500; --yel-ink:#0a0a0b;
+  --blu:#7fa0ff; --blu-ink:#06102e;
+  --grn:#3ec99a; --amb:#e0a233;
+  --bar:#f2f2f4; --bar-ink:#121216;
+  --wash:#1a1b20;
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ============================================================== nav */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; gap:.85rem; flex-wrap:wrap;
+  padding:.5rem .95rem; background:var(--paper);
+  border-bottom:2px solid var(--rule);
+}
+.topbar .brand{
+  font-family:"Archivo",sans-serif; font-weight:900; font-size:.88rem;
+  letter-spacing:-.01em; text-transform:uppercase;
+}
+.topbar nav{display:flex; gap:.26rem; flex-wrap:wrap;}
+.topbar a{
+  font-family:"IBM Plex Mono",monospace; font-size:.6rem; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase; text-decoration:none;
+  color:var(--ink-2); border:1px solid var(--hair); padding:.22rem .4rem;
+}
+.topbar a:hover{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+.topbar a:focus-visible{outline:2px solid var(--mag); outline-offset:2px;}
+
+/* ============================================================== shell */
+.deck{display:flex; flex-direction:column; gap:1rem; padding:1rem;}
+.slide{
+  container-type:inline-size;
+  width:100%; max-width:1240px; margin:0 auto;
+  aspect-ratio:16/9;
+  background:var(--paper); border:2px solid var(--rule);
+  padding:2.5cqw 3cqw;                 /* uniform margin on all four sides */
+  display:flex; flex-direction:column;
+  overflow:hidden;
+}
+
+/* header */
+.eyebrow{
+  align-self:flex-start;
+  font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:.95cqw; letter-spacing:.16em; text-transform:uppercase;
+  background:var(--mag); color:var(--mag-ink); padding:.4cqw .75cqw;
+}
+.eyebrow.blu{background:var(--blu); color:var(--blu-ink);}
+.eyebrow.yel{background:var(--yel); color:var(--yel-ink);}
+.head{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:2cqw; margin-top:1cqw;
+}
+h1.title{
+  font-family:"Archivo",sans-serif; font-weight:900;
+  font-size:3.2cqw; line-height:.98; letter-spacing:-.022em;
+  text-transform:uppercase; margin:0; text-wrap:balance;
+}
+.signum{
+  font-family:"Archivo",sans-serif; font-weight:900;
+  font-size:4.6cqw; line-height:.78; letter-spacing:-.04em;
+  color:transparent; -webkit-text-stroke:.15cqw var(--ink);
+  flex:none; opacity:.8;
+}
+.rule{height:.28cqw; background:var(--rule); margin-top:1cqw;}
+
+/* lede */
+.lede{
+  border:.15cqw solid var(--rule); padding:1cqw 1.2cqw; margin-top:1.3cqw;
+  font-size:1.18cqw; line-height:1.44; color:var(--ink);
+}
+.lede strong{font-weight:700;}
+
+/* body */
+.body{flex:1; display:flex; flex-direction:column; gap:1.1cqw; margin-top:1.3cqw; min-height:0;}
+.grid{display:grid; gap:1cqw;}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g4{grid-template-columns:repeat(4,1fr);}
+.g5{grid-template-columns:repeat(5,1fr);}
+.g21{grid-template-columns:1.3fr 1fr;}
+.g12{grid-template-columns:1fr 1.35fr;}
+.col{display:flex; flex-direction:column; gap:1cqw; min-height:0;}
+.fill{flex:1; min-height:0;}
+
+/* cards */
+.card{border:.15cqw solid var(--rule); display:flex; flex-direction:column; min-height:0; overflow:hidden;}
+.cbody{padding:.9cqw 1cqw; display:flex; flex-direction:column; gap:.6cqw; flex:1; min-height:0;}
+.cbar{
+  background:var(--bar); color:var(--bar-ink);
+  font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:.88cqw; letter-spacing:.12em; text-transform:uppercase;
+  padding:.46cqw .8cqw; display:flex; justify-content:space-between;
+  align-items:center; gap:.8cqw; flex:none;
+}
+.cbar.mag{background:var(--mag); color:var(--mag-ink);}
+.cbar.blu{background:var(--blu); color:var(--blu-ink);}
+.cbar.yel{background:var(--yel); color:var(--yel-ink);}
+h3.ch{
+  font-family:"Archivo",sans-serif; font-weight:800;
+  font-size:1.35cqw; line-height:1.08; letter-spacing:-.012em;
+  text-transform:uppercase; margin:0;
+}
+.card p{margin:0; font-size:.98cqw; line-height:1.42; color:var(--ink-2);}
+.card p.lead{color:var(--ink); font-size:1.03cqw;}
+
+/* lists */
+ul.tick{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:.46cqw;}
+ul.tick li{position:relative; padding-left:1.25cqw; font-size:.96cqw; line-height:1.38; color:var(--ink-2);}
+ul.tick li::before{content:""; position:absolute; left:0; top:.46cqw; width:.48cqw; height:.48cqw; background:var(--mag);}
+ul.tick.blu li::before{background:var(--blu);}
+ul.tick.ink li::before{background:var(--ink);}
+ul.tick.grn li::before{background:var(--grn);}
+ul.tick li b{color:var(--ink); font-weight:700;}
+
+/* numbered */
+.nrow{display:flex; gap:.85cqw; align-items:flex-start;}
+.nbadge{
+  flex:none; width:2cqw; height:2cqw; background:var(--ink); color:var(--paper);
+  font-family:"Archivo",sans-serif; font-weight:900; font-size:1.05cqw;
+  display:flex; align-items:center; justify-content:center;
+}
+.nbadge.mag{background:var(--mag); color:var(--mag-ink);}
+.nbadge.blu{background:var(--blu); color:var(--blu-ink);}
+
+/* stats */
+.stat{border:.15cqw solid var(--rule); padding:.85cqw .6cqw; text-align:center; display:flex; flex-direction:column; justify-content:center;}
+.stat .v{
+  font-family:"Archivo",sans-serif; font-weight:900;
+  font-size:2.25cqw; line-height:1; letter-spacing:-.03em;
+  color:var(--mag); font-variant-numeric:tabular-nums;
+}
+.stat .v.ink{color:var(--ink);}
+.stat .v.sm{font-size:1.8cqw;}
+.stat .k{
+  font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.72cqw;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+  margin-top:.38cqw; line-height:1.3;
+}
+
+/* tables */
+table{width:100%; border-collapse:collapse; font-size:.92cqw;}
+thead th{
+  background:var(--ink); color:var(--paper);
+  font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.76cqw;
+  letter-spacing:.1em; text-transform:uppercase; text-align:left;
+  padding:.42cqw .6cqw;
+}
+tbody td{padding:.4cqw .6cqw; border-bottom:1px solid var(--hair); color:var(--ink-2); vertical-align:middle;}
+tbody tr:last-child td{border-bottom:none;}
+tbody td b{color:var(--ink);}
+td.num,th.num{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;}
+td.num{color:var(--ink); font-weight:600;}
+tr.win td{background:var(--wash);}
+tr.win td b{color:var(--mag);}
+
+/* inline */
+mark{background:var(--yel); color:var(--yel-ink); padding:0 .18em; font-weight:600;}
+code{font-family:"IBM Plex Mono",monospace; font-size:.9em; background:var(--wash); padding:.05em .28em; border:1px solid var(--hair);}
+.tag{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:.68cqw; letter-spacing:.09em; text-transform:uppercase;
+  border:1px solid var(--ink); padding:.12cqw .38cqw; color:var(--ink);
+}
+.tag.mag{background:var(--mag); color:var(--mag-ink); border-color:var(--mag);}
+.tag.grn{color:var(--grn); border-color:var(--grn);}
+.tag.amb{color:var(--amb); border-color:var(--amb);}
+
+/* callout */
+.callout{border:.15cqw solid var(--rule); border-left:.55cqw solid var(--mag); padding:.85cqw 1cqw; display:flex; flex-direction:column; gap:.36cqw;}
+.callout.blu{border-left-color:var(--blu);}
+.callout.yel{border-left-color:var(--yel);}
+.callout .ct{font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.8cqw; letter-spacing:.12em; text-transform:uppercase; color:var(--ink);}
+.callout p{font-size:.96cqw; line-height:1.4; margin:0; color:var(--ink-2);}
+
+/* flow */
+.flow{display:flex; align-items:stretch; gap:.6cqw;}
+.fbox{flex:1; border:.15cqw solid var(--rule); padding:.7cqw .75cqw; display:flex; flex-direction:column; gap:.3cqw; min-width:0;}
+.fbox .ft{font-family:"Archivo",sans-serif; font-weight:800; font-size:.98cqw; text-transform:uppercase;}
+.fbox .fd{font-size:.82cqw; line-height:1.32; color:var(--ink-2);}
+.farrow{flex:none; align-self:center; font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:1.2cqw; color:var(--mag);}
+
+/* charts */
+.chartwrap{flex:1; display:flex; flex-direction:column; min-height:0;}
+svg.chart{width:100%; flex:1; min-height:0; display:block;}
+svg.chart text{font-family:"IBM Plex Mono",monospace; fill:var(--ink-3);}
+.legend{display:flex; gap:1cqw; flex-wrap:wrap; margin-top:.4cqw; flex:none;}
+.legend span{display:inline-flex; align-items:center; gap:.32cqw; font-family:"IBM Plex Mono",monospace; font-size:.72cqw; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3);}
+.legend i{width:1cqw; height:.26cqw; display:inline-block;}
+
+/* footer */
+.foot{
+  flex:none; margin-top:1.1cqw;
+  display:flex; align-items:center; justify-content:space-between;
+  border-top:.15cqw solid var(--rule); padding-top:.75cqw;
+  font-family:"IBM Plex Mono",monospace; font-weight:500; font-size:.76cqw;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3);
+}
+.foot .pg{background:var(--ink); color:var(--paper); padding:.3cqw .65cqw; letter-spacing:.11em;}
+
+/* cover */
+.cover{justify-content:flex-start;}
+.cvmid{flex:1; display:flex; flex-direction:column; justify-content:center; min-height:0;}
+.cvtop{display:flex; justify-content:space-between; align-items:flex-start; gap:2cqw;}
+.cvtop .eyebrow{align-self:auto;}
+.wordmark{font-family:"Archivo",sans-serif; font-weight:900; font-size:10.5cqw; line-height:.84; letter-spacing:-.045em; text-transform:uppercase; margin:0;}
+.wordmark em{font-style:normal; color:var(--mag);}
+.tagline{font-family:"Archivo",sans-serif; font-weight:700; font-size:1.95cqw; line-height:1.16; letter-spacing:-.014em; margin:1.3cqw 0 0; max-width:66%; text-wrap:balance;}
+.blurb{font-size:1.05cqw; line-height:1.48; color:var(--ink-2); max-width:54%; margin:.9cqw 0 0;}
+.teamrow{display:flex; align-items:stretch; gap:1.6cqw; border-top:.22cqw solid var(--rule); padding-top:1cqw;}
+.teamname{flex:none; padding-right:1.6cqw; border-right:.15cqw solid var(--hair); display:flex; flex-direction:column; justify-content:flex-start;}
+.teamname .r{font-family:"IBM Plex Mono",monospace; font-size:.72cqw; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3);}
+.teamname .tn{font-family:"Archivo",sans-serif; font-weight:900; font-size:2.1cqw; line-height:1; letter-spacing:-.025em; text-transform:uppercase; margin-top:.28cqw; color:var(--mag);}
+.cvfoot{flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:1cqw;}
+.role{border-top:.15cqw solid var(--ink); padding-top:.5cqw;}
+.role .r{font-family:"IBM Plex Mono",monospace; font-size:.72cqw; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3);}
+.role .n{font-family:"Archivo",sans-serif; font-weight:800; font-size:1.08cqw; text-transform:uppercase; margin-top:.26cqw; letter-spacing:-.01em;}
+
+/* narrow fallback */
+@container (max-width:640px){
+  .slide{aspect-ratio:auto;}
+  .g2,.g3,.g4,.g5,.g21,.g12,.cvfoot{grid-template-columns:1fr;}
+  .teamrow{flex-direction:column; gap:1cqw;}
+  .teamname{border-right:none; padding-right:0;}
+  .flow{flex-direction:column;}
+  .farrow{transform:rotate(90deg);}
+  .tagline,.blurb{max-width:100%;}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important;}}
+
+/* print */
+@page{size:13.333in 7.5in; margin:0;}
+@media print{
+  body{background:var(--paper);}
+  .topbar{display:none;}
+  .deck{padding:0; gap:0;}
+  .slide{border:none; max-width:none; width:100%; break-inside:avoid; break-after:page;}
+  .slide:last-child{break-after:auto;}
+}
+</style>
+
+<div class="topbar">
+  <span class="brand">Loadcast</span>
+  <nav>
+    <a href="#s0">Cover</a>
+    <a href="#s1">01 Idea</a>
+    <a href="#s2">02 Problem</a>
+    <a href="#s3">03 EDA</a>
+    <a href="#s4">04 Insight</a>
+    <a href="#s5">05 Preprocessing</a>
+    <a href="#s6">06 Features</a>
+    <a href="#s7">07 Models</a>
+    <a href="#s8">08 Strategy</a>
+    <a href="#s9">09 Results</a>
+    <a href="#s10">10 Roadmap</a>
+  </nav>
+</div>
+
+<div class="deck">
+
+<!-- ========================================================= COVER -->
+<section class="slide cover" id="s0">
+  <div class="cvtop">
+    <span class="eyebrow">PlayHack &nbsp;//&nbsp; Machine Learning Track</span>
+    <span class="eyebrow blu">Round 1 &nbsp;//&nbsp; Ideation &amp; Initial Submission</span>
+  </div>
+
+  <div class="cvmid">
+    <h1 class="wordmark">LOAD<em>CAST</em></h1>
+    <p class="tagline">Thirty days of wearable data, read as a physiological trajectory &mdash; not a summary.</p>
+    <p class="blurb">Predicting <b>whether</b> an athlete breaks down in the next month, <b>when</b> it starts, and <b>how long</b> they are sidelined &mdash; built strictly from the observation window and validated against the competition's own scoring function.</p>
+  </div>
+
+  <div class="teamrow">
+    <div class="teamname">
+      <div class="r">Team</div>
+      <div class="tn">Isometric</div>
+    </div>
+    <div class="cvfoot">
+      <div class="role"><div class="r">Team Leader</div><div class="n">Ritik Yadav</div></div>
+      <div class="role"><div class="r">Member</div><div class="n">Manish Bisla</div></div>
+      <div class="role"><div class="r">Member</div><div class="n">Abhihar Singh Rathore</div></div>
+      <div class="role"><div class="r">Member</div><div class="n">Dipankar Ghosh</div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">00 / Cover</span>
+  </div>
+</section>
+
+<!-- ========================================================= 01 IDEA -->
+<section class="slide" id="s1">
+  <span class="eyebrow">The Idea</span>
+  <div class="head">
+    <h1 class="title">Injury is a process,<br>not an event</h1>
+    <div class="signum">01</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Most tabular approaches summarise a month into averages. But an athlete who trained steadily and one who ramped hard in the final week can have <strong>identical means</strong> and completely different risk. Our thesis: the <strong>shape</strong> of the 30 days carries the signal, and the shape is measurable.
+  </div>
+
+  <div class="body">
+    <div class="grid g3">
+      <div class="card">
+        <div class="cbar mag"><span>Hypothesis</span><span>Testable</span></div>
+        <div class="cbody">
+          <h3 class="ch">Load outruns adaptation</h3>
+          <p>Overuse injury follows a mismatch between workload accumulation and the body's capacity to adapt. That mismatch leaves fingerprints: rising acute-to-chronic load, falling training variation, autonomic drift, and shrinking recovery.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Prediction if true</span><span>Falsifiable</span></div>
+        <div class="cbody">
+          <h3 class="ch">A visible pre-ramp</h3>
+          <p>If the thesis holds, injured athletes should show a measurable upward load trajectory in the observation window that healthy athletes do not &mdash; and the <em>steepness</em> of that ramp should encode how soon the breakdown arrives.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar blu"><span>Verdict</span><span>Confirmed</span></div>
+        <div class="cbody">
+          <h3 class="ch">The data agrees</h3>
+          <p>Aligned on true onset, mean load climbs <b>324 &rarr; 411</b> then falls off a cliff. Observation-window features reach <b>|r| = 0.855</b> against onset day. Slide 04 shows it.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g21 fill">
+      <div class="card">
+        <div class="cbar yel"><span>What makes this approach different</span><span>Ideation</span></div>
+        <div class="cbody">
+          <div class="nrow"><div class="nbadge mag">1</div><div>
+            <p class="lead"><b>Scale-free, not population-normalised.</b> Every core feature is a ratio or a slope measured against the athlete's <em>own</em> baseline. One model serves a goalkeeper and a sprinter without per-sport retraining.</p></div></div>
+          <div class="nrow"><div class="nbadge">2</div><div>
+            <p class="lead"><b>The scoring function is the spec.</b> We implemented the brief's metric &mdash; penalty, baseline, skill &mdash; as a validation function <em>before</em> writing a model, then argued every decision against that number.</p></div></div>
+          <div class="nrow"><div class="nbadge">3</div><div>
+            <p class="lead"><b>Physiology, not just statistics.</b> Each feature family encodes a published injury mechanism, so importances are readable by a coach and the output names a cause, not just a risk.</p></div></div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="callout">
+          <div class="ct">Why it matters beyond the leaderboard</div>
+          <p>A binary label tells a physio nothing actionable. A ranked watchlist with an onset estimate and a named driver &mdash; <em>ramp</em>, <em>monotony</em>, <em>RHR drift</em>, <em>sleep debt</em> &mdash; changes next week's training plan.</p>
+        </div>
+        <div class="callout blu">
+          <div class="ct">Scope of Round 1</div>
+          <p>Ideation plus a working end-to-end prototype: 100 features, three model heads, cross-validated against the official metric, and two valid submissions generated. Round 2 turns the idea into a survival model and a staff-facing board.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">01 / Idea</span>
+  </div>
+</section>
+
+<!-- ========================================================= 02 PROBLEM -->
+<section class="slide" id="s2">
+  <span class="eyebrow">Problem &amp; Scoring</span>
+  <div class="head">
+    <h1 class="title">Three predictions,<br>one hidden month</h1>
+    <div class="signum">02</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Days 1&ndash;30 are visible; days 31&ndash;60 are not. The two timing numbers are graded on <strong>every athlete who is truly injured</strong> &mdash; including the ones we said were fine.
+  </div>
+
+  <div class="body">
+    <div class="grid g3">
+      <div class="card">
+        <div class="cbar mag"><span>Target A</span><span>F1</span></div>
+        <div class="cbody">
+          <h3 class="ch">injured_in_risk_window</h3>
+          <p>Binary. Does an onset fall inside days 31&ndash;60? Both false alarms and misses cost.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Target B</span><span>MAE &rarr; skill</span></div>
+        <div class="cbody">
+          <h3 class="ch">onset_day_offset</h3>
+          <p>Integer 1&ndash;30. Which day the injury begins, scored against a mean-prediction baseline.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Target C</span><span>MAE &rarr; skill</span></div>
+        <div class="cbody">
+          <h3 class="ch">recovery_duration</h3>
+          <p>Days sidelined after onset. Required for every athlete &mdash; even those predicted healthy.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g21 fill">
+      <div class="card">
+        <div class="cbar"><span>The four traps</span><span>What actually makes this hard</span></div>
+        <div class="cbody">
+          <div class="nrow"><div class="nbadge mag">1</div><div>
+            <p class="lead"><b>Asymmetric penalty.</b> A missed injury books <mark>30 days of error</mark> on <em>both</em> timing heads &mdash; 3.9&times; the onset baseline MAE. One miss cannot be repaid by a hundred good timing predictions.</p></div></div>
+          <div class="nrow"><div class="nbadge">2</div><div>
+            <p class="lead"><b>Train ships 60 days; test ships 30.</b> The extra month is the answer key, and a leakage trap that would inflate validation and collapse on the leaderboard.</p></div></div>
+          <div class="nrow"><div class="nbadge">3</div><div>
+            <p class="lead"><b>Conditional targets, unconditional scoring.</b> Regressors can only learn from injured athletes, yet must fire for everyone.</p></div></div>
+          <div class="nrow"><div class="nbadge">4</div><div>
+            <p class="lead"><b>Answers must cohere.</b> A confident risk call with an incoherent onset day is not a usable recommendation.</p></div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cbar blu"><span>Metric, implemented literally</span><span>validation harness</span></div>
+        <div class="cbody">
+          <ul class="tick blu">
+            <li><b>Hit</b> (predicted 1, truly 1): MAE against true onset and recovery.</li>
+            <li><b>Miss</b> (predicted 0, truly 1): fixed <b>PENALTY = 30</b> on both.</li>
+            <li><b>Skill</b> = <code>max(0, 1 &minus; MAE_model / MAE_baseline)</code>.</li>
+            <li><b>Baseline</b> = training-set mean onset (7.61 MAE) and mean recovery (3.24 MAE).</li>
+          </ul>
+          <div class="callout yel">
+            <div class="ct">Consequence we designed around</div>
+            <p>The two heads die at different speeds: <b>recovery</b> skill is gone once recall falls below ~99%, <b>onset</b> skill once it falls below ~81%. Nothing short of near-total recall keeps both alive &mdash; which is why our optimum ends up degenerate. Slide 08.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">02 / Problem</span>
+  </div>
+</section>
+
+<!-- ========================================================= 03 EDA -->
+<section class="slide" id="s3">
+  <span class="eyebrow blu">Exploratory Data Analysis</span>
+  <div class="head">
+    <h1 class="title">Profiling ten tables<br>and three targets</h1>
+    <div class="signum">03</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    4,100 athletes, 19.4 M hourly readings, 213 K athlete-days. Before modelling we profiled coverage, distributions and target shape &mdash; which is where the first strategic finding appeared: <strong>the obvious risk factors carry almost no signal</strong>.
+  </div>
+
+  <div class="body">
+    <div class="grid g5">
+      <div class="stat"><div class="v">3,000</div><div class="k">Train athletes</div></div>
+      <div class="stat"><div class="v">1,100</div><div class="k">Test athletes</div></div>
+      <div class="stat"><div class="v ink">35.0%</div><div class="k">Injury base rate</div></div>
+      <div class="stat"><div class="v ink">15.3</div><div class="k">Mean onset day</div></div>
+      <div class="stat"><div class="v ink">11.5</div><div class="k">Mean recovery days</div></div>
+    </div>
+
+    <div class="grid g2 fill">
+      <div class="card">
+        <div class="cbar"><span>Target distributions</span><span>n = 1,050 injured</span></div>
+        <div class="cbody chartwrap">
+          <svg class="chart" viewBox="0 0 600 190" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Onset day is near-uniform across the thirty day window, while recovery duration is bell-shaped centred on eleven days.">
+            <text x="0" y="10" font-size="9.5" font-weight="600" fill="var(--ink)">ONSET DAY (5-day bins)</text>
+            <g>
+              <rect x="0"   y="42" width="40" height="60" fill="var(--mag)" opacity=".82"/>
+              <rect x="46"  y="24" width="40" height="78" fill="var(--mag)" opacity=".82"/>
+              <rect x="92"  y="36" width="40" height="66" fill="var(--mag)" opacity=".82"/>
+              <rect x="138" y="28" width="40" height="74" fill="var(--mag)" opacity=".82"/>
+              <rect x="184" y="42" width="40" height="60" fill="var(--mag)" opacity=".82"/>
+              <rect x="230" y="17" width="40" height="85" fill="var(--mag)" opacity=".82"/>
+              <line x1="0" y1="102" x2="270" y2="102" stroke="var(--ink)" stroke-width="1.5"/>
+              <text x="0" y="114" font-size="8">1</text>
+              <text x="270" y="114" font-size="8" text-anchor="end">30</text>
+              <text x="135" y="132" font-size="8.5" text-anchor="middle" fill="var(--ink-2)">near-uniform &rarr; weak baseline</text>
+            </g>
+            <text x="330" y="10" font-size="9.5" font-weight="600" fill="var(--ink)">RECOVERY DAYS (2-day bins)</text>
+            <g>
+              <rect x="330" y="80" width="30" height="22" fill="var(--blu)" opacity=".82"/>
+              <rect x="364" y="50" width="30" height="52" fill="var(--blu)" opacity=".82"/>
+              <rect x="398" y="22" width="30" height="80" fill="var(--blu)" opacity=".82"/>
+              <rect x="432" y="30" width="30" height="72" fill="var(--blu)" opacity=".82"/>
+              <rect x="466" y="24" width="30" height="78" fill="var(--blu)" opacity=".82"/>
+              <rect x="500" y="25" width="30" height="77" fill="var(--blu)" opacity=".82"/>
+              <rect x="534" y="78" width="30" height="24" fill="var(--blu)" opacity=".82"/>
+              <rect x="568" y="62" width="30" height="40" fill="var(--blu)" opacity=".82"/>
+              <line x1="330" y1="102" x2="598" y2="102" stroke="var(--ink)" stroke-width="1.5"/>
+              <text x="330" y="114" font-size="8">5</text>
+              <text x="598" y="114" font-size="8" text-anchor="end">20</text>
+              <text x="464" y="132" font-size="8.5" text-anchor="middle" fill="var(--ink-2)">mean 11.5, sd 3.9</text>
+            </g>
+            <text x="0" y="158" font-size="9.5" font-weight="600" fill="var(--ink)">INJURY RATE BY SPORT &mdash; essentially flat</text>
+            <g font-size="8">
+              <text x="0"   y="178" fill="var(--ink-2)">ATHL .322</text>
+              <text x="100" y="178" fill="var(--ink-2)">TENN .325</text>
+              <text x="200" y="178" fill="var(--ink-2)">VOLL .362</text>
+              <text x="300" y="178" fill="var(--ink-2)">BASK .363</text>
+              <text x="400" y="178" fill="var(--ink-2)">FOOT .364</text>
+              <text x="500" y="178" fill="var(--ink-2)">BADM .365</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card fill">
+          <div class="cbar mag"><span>Findings that shaped the model</span><span>EDA</span></div>
+          <div class="cbody">
+            <ul class="tick">
+              <li><b>Static risk factors are nearly useless.</b> Injury rate varies only 0.322&ndash;0.365 across six sports, and prior-season injuries run the <em>wrong</em> way (0&rarr;.355, 1&rarr;.344, 2&rarr;.322) before a noisy jump at 3 (.492, n = 63). The signal is not demographic.</li>
+              <li><b>Onset is near-uniform over 1&ndash;30</b>, so the mean-prediction baseline is weak (MAE 7.61) and genuinely beatable.</li>
+              <li><b>Recovery is bell-shaped but unconditioned</b> &mdash; its strongest correlate anywhere in 100 features reaches only |r| = 0.058.</li>
+              <li><b>Class balance is workable</b> at 35% positive; no resampling needed.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout blu">
+          <div class="ct">Where we looked next</div>
+          <p>If who the athlete <em>is</em> does not predict injury, then what the athlete <em>did</em> must. That pushed the entire feature effort into temporal dynamics.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">03 / EDA</span>
+  </div>
+</section>
+
+<!-- ========================================================= 04 INSIGHT -->
+<section class="slide" id="s4">
+  <span class="eyebrow">Key Insight</span>
+  <div class="head">
+    <h1 class="title">Injury announces<br>itself in advance</h1>
+    <div class="signum">04</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Averaging daily load across all 1,050 injured athletes, aligned on each athlete's true onset day, exposes the mechanism: a <strong>ramp running at least two weeks</strong>, then a cliff. This is the pattern the features are built to catch while it is still inside the observation window.
+  </div>
+
+  <div class="body">
+    <div class="grid g21 fill">
+      <div class="card">
+        <div class="cbar"><span>Mean daily load, aligned on onset</span><span>n = 1,050</span></div>
+        <div class="cbody chartwrap">
+          <svg class="chart" viewBox="0 0 600 220" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mean training load rises steadily from 324 to 411 over the fourteen days before onset, drops sharply to 249 at onset, then climbs slowly during recovery.">
+            <line x1="42" y1="18"  x2="592" y2="18"  stroke="var(--hair)"/>
+            <line x1="42" y1="60"  x2="592" y2="60"  stroke="var(--hair)"/>
+            <line x1="42" y1="102" x2="592" y2="102" stroke="var(--hair)"/>
+            <line x1="42" y1="144" x2="592" y2="144" stroke="var(--hair)"/>
+            <line x1="42" y1="168" x2="592" y2="168" stroke="var(--ink)" stroke-width="1.5"/>
+            <text x="36" y="22"  font-size="8.5" text-anchor="end">440</text>
+            <text x="36" y="64"  font-size="8.5" text-anchor="end">390</text>
+            <text x="36" y="106" font-size="8.5" text-anchor="end">340</text>
+            <text x="36" y="148" font-size="8.5" text-anchor="end">290</text>
+
+            <line x1="292" y1="14" x2="292" y2="168" stroke="var(--mag)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="297" y="24" font-size="9" fill="var(--mag)" font-weight="600">ONSET</text>
+
+            <!-- ramp: rel -14..-1  (324 -> 411) -->
+            <polyline fill="none" stroke="var(--ink)" stroke-width="2.6"
+              points="42,115 60,110 78,106 96,101 114,94 133,87 151,81 169,77 187,72 205,69 223,63 241,56 259,48 273,43"/>
+            <polyline fill="none" stroke="var(--mag)" stroke-width="2.4" stroke-dasharray="3 3" points="273,43 292,178"/>
+            <!-- recovery: rel 0..14 (249 -> 286) -->
+            <polyline fill="none" stroke="var(--blu)" stroke-width="2.6"
+              points="292,178 313,178 334,178 355,178 376,178 397,176 418,174 439,171 460,167 481,164 502,161 523,157 544,154 565,150 586,148"/>
+
+            <circle cx="273" cy="43" r="3.4" fill="var(--mag)"/>
+            <circle cx="292" cy="178" r="3.4" fill="var(--blu)"/>
+            <text x="240" y="36" font-size="9" fill="var(--ink)" font-weight="700">411</text>
+            <text x="299" y="192" font-size="9" fill="var(--ink)" font-weight="700">249</text>
+            <text x="42" y="128" font-size="9" fill="var(--ink)" font-weight="700">324</text>
+
+            <text x="42"  y="184" font-size="8.5">&minus;14 d</text>
+            <text x="586" y="184" font-size="8.5" text-anchor="end">+14 d</text>
+            <text x="315" y="208" font-size="8.5" text-anchor="middle" letter-spacing="1.3">DAYS RELATIVE TO INJURY ONSET</text>
+          </svg>
+          <div class="legend">
+            <span><i style="background:var(--ink)"></i>Pre-injury ramp</span>
+            <span><i style="background:var(--mag)"></i>Onset cliff</span>
+            <span><i style="background:var(--blu)"></i>Recovery climb</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card fill">
+          <div class="cbar mag"><span>Separation inside the observation window</span><span>days 1&ndash;30 only</span></div>
+          <div class="cbody">
+            <ul class="tick">
+              <li><b>Acute:chronic ratio 1.051 vs 1.000.</b> Injured athletes end the month <em>accelerating</em>; healthy ones are flat. Small in absolute terms, highly consistent across 3,000 athletes.</li>
+              <li><b>Onset correlates up to |r| = 0.855</b> with single observation-window features. The ramp's steepness encodes how far away the breakdown is.</li>
+              <li><b>Recovery correlates with nothing</b> &mdash; best feature |r| = 0.058. We report this rather than pretend otherwise.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="callout">
+          <div class="ct">The counter-intuitive result</div>
+          <p><em>When</em> the injury lands is substantially easier to predict than <em>whether</em> it lands &mdash; the inverse of the usual assumption, and the reason our scoring strategy protects timing above all else.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">04 / Insight</span>
+  </div>
+</section>
+
+<!-- ========================================================= 05 PREPROCESSING -->
+<section class="slide" id="s5">
+  <span class="eyebrow yel">Data Preprocessing</span>
+  <div class="head">
+    <h1 class="title">Clip, clean,<br>collapse, prune</h1>
+    <div class="signum">05</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Ten tables at four different grains become <strong>one row per athlete</strong>. The order matters: clip the window first, then repair quality issues, then aggregate, then delete anything that cannot carry information.
+  </div>
+
+  <div class="body">
+    <div class="flow">
+      <div class="fbox"><div class="ft">1 &middot; Clip</div><div class="fd">Every source hard-filtered to 2026-01-05 &rarr; 02-03</div></div>
+      <div class="farrow">&rarr;</div>
+      <div class="fbox"><div class="ft">2 &middot; Parse</div><div class="fd">Three datetime formats normalised to one</div></div>
+      <div class="farrow">&rarr;</div>
+      <div class="fbox"><div class="ft">3 &middot; Collapse</div><div class="fd">Hourly &rarr; daily &rarr; athlete, 19.4 M &rarr; 4,100 rows</div></div>
+      <div class="farrow">&rarr;</div>
+      <div class="fbox"><div class="ft">4 &middot; Impute</div><div class="fd">Sparse sources left as NaN for LightGBM</div></div>
+      <div class="farrow">&rarr;</div>
+      <div class="fbox" style="border-width:.3cqw"><div class="ft">5 &middot; Prune</div><div class="fd">8 dead columns dropped: 108 &rarr; 100</div></div>
+    </div>
+
+    <div class="grid g3 fill">
+      <div class="card">
+        <div class="cbar mag"><span>Quality audit</span><span>What we found</span></div>
+        <div class="cbody">
+          <ul class="tick">
+            <li><b>SedentaryMinutes is constant at 1200</b> for all 213 K rows &mdash; zero variance, and it silently produced four dead features.</li>
+            <li><b>TrackerDistance equals TotalDistance</b> in 100% of rows &mdash; perfectly redundant.</li>
+            <li><b>TotalSleepRecords is always 1.</b></li>
+            <li><b>No nulls and no duplicate athlete-days</b> in the daily or sleep tables.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cbar blu"><span>Missingness</span><span>Handled, not dropped</span></div>
+        <div class="cbody">
+          <ul class="tick blu">
+            <li><b>weightLogInfo covers 83.5% of athletes</b>, median 3 logs each; the <code>Fat</code> column is <b>69.4% null</b>.</li>
+            <li>We keep the source and let LightGBM route NaN natively &mdash; discarding it would drop a sixth of the cohort's body-composition signal.</li>
+            <li>The RandomForest head, which cannot take NaN, gets a median imputer inside its pipeline.</li>
+            <li>Every other source has <b>100% athlete coverage</b>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cbar"><span>Pruning</span><span>108 &rarr; 100 features</span></div>
+        <div class="cbody">
+          <p class="lead">Zero-variance and exactly-duplicated columns are detected <b>on the training set only</b> and removed from both sets.</p>
+          <ul class="tick ink">
+            <li>7 constant: three <code>SedentaryMinutes_*</code> columns plus <code>sed_slope</code>, <code>rest_days</code>, <code>hours_max</code>, <code>sessions_per_active_day</code></li>
+            <li>1 duplicate: <code>active_days</code></li>
+          </ul>
+          <div class="callout yel">
+            <div class="ct">Measured, one variable at a time</div>
+            <p>Re-running the <em>identical</em> pipeline with <code>--no-prune</code> isolates it: AUC <b>+0.005</b>, F1 <b>+0.010</b>, but recovery skill <b>&minus;0.006</b> and composite <b>&minus;0.002</b>. We keep it because F1 is an officially scored target and our composite is not.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">05 / Preprocessing</span>
+  </div>
+</section>
+
+<!-- ========================================================= 06 FEATURES -->
+<section class="slide" id="s6">
+  <span class="eyebrow">Feature Engineering</span>
+  <div class="head">
+    <h1 class="title">100 features from<br>sports science</h1>
+    <div class="signum">06</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Each family encodes a published mechanism of overuse injury &mdash; <strong>load accumulation, insufficient variation, autonomic drift, recovery debt, schedule congestion</strong> &mdash; which is why the resulting importances are interpretable to a coach rather than a black box.
+  </div>
+
+  <div class="body">
+    <div class="grid g3">
+      <div class="card">
+        <div class="cbar mag"><span>Family 01</span><span>Load &amp; ACWR</span></div>
+        <div class="cbody">
+          <p class="lead">Internal load proxy <code>3&times;very + 2&times;fairly + 1&times;light</code> active minutes, then acute:chronic ratios at <b>7:28</b> and <b>3:21</b>.</p>
+          <ul class="tick"><li>Weekly means, W4/W1 ratio, largest week-over-week jump</li><li>Spike days above 1.5&times; personal median</li></ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Family 02</span><span>Monotony &amp; strain</span></div>
+        <div class="cbody">
+          <p class="lead">Mean load &divide; its standard deviation. Grinding the same session daily with no hard/easy variation is a precursor <em>independent of volume</em>.</p>
+          <ul class="tick ink"><li>Strain = total load &times; monotony</li><li>Personal-baseline z-score of the peak day</li></ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar blu"><span>Family 03</span><span>Autonomic</span></div>
+        <div class="cbody">
+          <p class="lead">Nocturnal resting HR reconstructed from the <b>01:00&ndash;05:00</b> band, then its slope across the month. Rising RHR under constant load = non-adaptation.</p>
+          <ul class="tick blu"><li>Last-7 vs whole-window delta</li><li>HR reserve trend, daily max drift</li></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3">
+      <div class="card">
+        <div class="cbar"><span>Family 04</span><span>Recovery</span></div>
+        <div class="cbody">
+          <p>Cumulative sleep shortfall against an 8-hour reference, efficiency (asleep &divide; in bed), nights under six hours, final-week trend against the month.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Family 05</span><span>Congestion</span></div>
+        <div class="cbody">
+          <p>Longest streak of consecutive training days without rest, sessions per active day, scrimmage-vs-gym mix, dispersion of session start times as a circadian proxy.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Family 06</span><span>Context &amp; crosses</span></div>
+        <div class="cbody">
+          <p>Sport, position, team, BMI, experience-per-age, prior injuries per season &mdash; crossed with load to give <code>load_per_sleep</code>, <code>acwr&times;prior_inj</code>, <code>rhr_rise&times;load</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout yel">
+      <div class="ct">Six mechanisms, one latent &mdash; the honest reading</div>
+      <p>We engineered six independent mechanisms; <b>this dataset contains roughly one</b>. Monotony, ACWR, RHR drift and load slope inter-correlate at |r| = 0.80&ndash;0.99, median <b>0.92</b> (<code>monotony</code> vs <code>strain</code>: <b>0.9995</b>), 70 pairs table-wide exceed 0.98, and one principal component holds <b>92.8%</b> of that block &mdash; which is why four unrelated features all land at |r| &asymp; 0.855 against onset. Onset MAE by how much of it you use: <b>7.61</b> baseline &rarr; <b>3.43</b> one feature &rarr; <b>2.92</b> PC1 &rarr; <b>2.64</b> all 95 (2.61 with the shipped blend).</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">06 / Features</span>
+  </div>
+</section>
+
+<!-- ========================================================= 07 MODELS -->
+<section class="slide" id="s7">
+  <span class="eyebrow">Models Used</span>
+  <div class="head">
+    <h1 class="title">Chosen on evidence,<br>not on habit</h1>
+    <div class="signum">07</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Every candidate ran on the <strong>same feature table and the same metric</strong>. Gradient boosting won, but narrowly &mdash; and that narrowness is itself the finding.
+  </div>
+
+  <div class="body">
+    <div class="grid g2">
+      <div class="card">
+        <div class="cbar mag"><span>Task A &mdash; classification</span><span>5-fold OOF</span></div>
+        <div class="cbody" style="padding-top:.6cqw">
+          <table>
+            <thead><tr><th>Model</th><th class="num">ROC-AUC</th><th class="num">Best F1</th></tr></thead>
+            <tbody>
+              <tr><td>Decision tree (d=6)</td><td class="num">0.735</td><td class="num">0.631</td></tr>
+              <tr><td>LightGBM + native cats</td><td class="num">0.752</td><td class="num">0.650</td></tr>
+              <tr><td>Random forest</td><td class="num">0.760</td><td class="num">0.651</td></tr>
+              <tr><td>Logistic regression</td><td class="num">0.761</td><td class="num">0.648</td></tr>
+              <tr><td>LightGBM, numeric only</td><td class="num">0.762</td><td class="num">0.654</td></tr>
+              <tr class="win"><td><b>Final config</b> <span class="tag mag">chosen</span></td><td class="num"><b>0.767</b></td><td class="num"><b>0.657</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cbar blu"><span>Task B &mdash; onset regression</span><span>injured only</span></div>
+        <div class="cbody" style="padding-top:.6cqw">
+          <table>
+            <thead><tr><th>Model</th><th class="num">MAE</th><th class="num">Skill</th></tr></thead>
+            <tbody>
+              <tr><td>Mean baseline (brief)</td><td class="num">7.615</td><td class="num">0.000</td></tr>
+              <tr><td>Ridge regression</td><td class="num">2.971</td><td class="num">0.610</td></tr>
+              <tr><td>LightGBM (L2 loss)</td><td class="num">2.760</td><td class="num">0.638</td></tr>
+              <tr><td>LightGBM (L1 loss)</td><td class="num">2.658</td><td class="num">0.651</td></tr>
+              <tr><td>Random forest</td><td class="num">2.623</td><td class="num">0.656</td></tr>
+              <tr class="win"><td><b>LGBM(L1) + RF blend</b> <span class="tag mag">chosen</span></td><td class="num"><b>2.610</b></td><td class="num"><b>0.657</b></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g21 fill">
+      <div class="card">
+        <div class="cbar"><span>Final architecture</span><span>three heads, one table</span></div>
+        <div class="cbody">
+          <ul class="tick ink">
+            <li><b>Head A</b> &mdash; LightGBM classifier, 31 leaves, lr 0.03, L2 = 5, early stopping on fold AUC. All 3,000 athletes; categoricals passed natively, categories fixed across train and test.</li>
+            <li><b>Heads B &amp; C</b> &mdash; 0.6 &times; LightGBM(L1) + 0.4 &times; RandomForest, fit on the 1,050 injured only. <b>L1 objective deliberately</b>: the metric is MAE, so the loss <em>is</em> the metric.</li>
+            <li><b>Ensembling</b> &mdash; averaged across the five folds; the saved artefact <em>is</em> that ensemble, so inference reproduces the validated numbers exactly.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="callout">
+          <div class="ct">The narrowness is the finding</div>
+          <p>Logistic regression reaches 0.761 vs LightGBM's 0.767. Not &ldquo;great features&rdquo; &mdash; slide 06: the predictors are <b>near-collinear</b>, so there is <b>one signal and every model finds it</b>.</p>
+        </div>
+        <div class="callout blu">
+          <div class="ct">Read the comparison honestly</div>
+          <p>Benchmark rows use the <b>unpruned 108-feature</b> table at fixed 600 trees; the final row adds pruning and early stopping. Native cats <em>lose</em> 0.010 AUC at fixed depth &mdash; early stopping recovers it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">07 / Models</span>
+  </div>
+</section>
+
+<!-- ========================================================= 08 STRATEGY -->
+<section class="slide" id="s8">
+  <span class="eyebrow">Scoring Strategy</span>
+  <div class="head">
+    <h1 class="title">The penalty inverts<br>the usual trade-off</h1>
+    <div class="signum">08</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Chasing the best F1 is the obvious move, and it is the wrong one. Because a missed injury costs 30 days on both timing heads, <strong>recall is not a preference here &mdash; it is a budget constraint</strong>, and we can compute exactly where it binds.
+  </div>
+
+  <div class="body">
+    <div class="grid g21 fill">
+      <div class="card">
+        <div class="cbar"><span>Threshold sweep, out-of-fold</span><span>3,000 athletes</span></div>
+        <div class="cbody chartwrap">
+          <svg class="chart" viewBox="0 0 600 210" preserveAspectRatio="xMidYMid meet" role="img" aria-label="As the threshold rises from zero to 0.50, F1 improves from 0.52 to 0.66 while onset skill falls from 0.657 and reaches zero at threshold 0.21.">
+            <line x1="40" y1="16"  x2="592" y2="16"  stroke="var(--hair)"/>
+            <line x1="40" y1="55"  x2="592" y2="55"  stroke="var(--hair)"/>
+            <line x1="40" y1="94"  x2="592" y2="94"  stroke="var(--hair)"/>
+            <line x1="40" y1="133" x2="592" y2="133" stroke="var(--hair)"/>
+            <line x1="40" y1="172" x2="592" y2="172" stroke="var(--ink)" stroke-width="1.5"/>
+            <text x="34" y="20"  font-size="8.5" text-anchor="end">0.8</text>
+            <text x="34" y="59"  font-size="8.5" text-anchor="end">0.6</text>
+            <text x="34" y="98"  font-size="8.5" text-anchor="end">0.4</text>
+            <text x="34" y="137" font-size="8.5" text-anchor="end">0.2</text>
+            <text x="34" y="176" font-size="8.5" text-anchor="end">0.0</text>
+
+            <rect x="272" y="16" width="320" height="156" fill="var(--mag)" opacity=".06"/>
+            <line x1="272" y1="16" x2="272" y2="172" stroke="var(--mag)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="284" y="122" font-size="8.5" fill="var(--mag)" font-weight="600">SKILL = 0 FROM thr 0.21</text>
+            <text x="284" y="134" font-size="8" fill="var(--mag)">recall 0.805 &mdash; a fifth of injuries missed</text>
+            <text x="284" y="146" font-size="8" fill="var(--mag)">scored MAE 7.64 &gt; 7.61 baseline</text>
+
+            <polyline fill="none" stroke="var(--mag)" stroke-width="2.6"
+              points="40,44 106,44 128,46 150,49 172,57 195,69 217,90 239,114 261,155 272,172 592,172"/>
+            <polyline fill="none" stroke="var(--ink)" stroke-width="2.6"
+              points="40,71 150,70 195,67 239,64 261,62 283,62 305,58 327,56 349,52 371,49 393,47 415,45 448,44 482,45 537,46 592,46"/>
+
+            <circle cx="106" cy="44" r="4.2" fill="none" stroke="var(--blu)" stroke-width="2.4"/>
+            <text x="114" y="41" font-size="8.5" fill="var(--blu)" font-weight="600">DEFAULT thr 0.06</text>
+            <circle cx="448" cy="44" r="3.4" fill="var(--ink)"/>
+            <text x="448" y="64" font-size="8.5" fill="var(--ink)" font-weight="600" text-anchor="middle">F1 PEAK</text>
+
+            <text x="40"  y="188" font-size="8.5">0.00</text>
+            <text x="272" y="188" font-size="8.5" text-anchor="middle">0.21</text>
+            <text x="448" y="188" font-size="8.5" text-anchor="middle">0.37</text>
+            <text x="592" y="188" font-size="8.5" text-anchor="end">0.50</text>
+            <text x="315" y="205" font-size="8.5" text-anchor="middle" letter-spacing="1.3">CLASSIFICATION THRESHOLD</text>
+          </svg>
+          <div class="legend">
+            <span><i style="background:var(--mag)"></i>Onset skill score</span>
+            <span><i style="background:var(--ink)"></i>F1 score</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="cbar mag"><span>The arithmetic</span><span>why 0.21 is a cliff</span></div>
+          <div class="cbody">
+            <p class="lead">Measured, not illustrated: at threshold <b>0.21</b> recall is <b>0.805</b>, and the scored onset MAE is <b>7.643</b> against a 7.615 baseline. <mark>Skill is already exactly zero there</mark> &mdash; a fifth of the injuries missed is enough to erase every correct timing prediction.</p>
+            <p>Moving from the F1 peak at 0.37 down to 0.06 costs <b>0.138 F1</b> and buys back <b>0.657</b> onset skill plus <b>0.055</b> recovery skill. A five-to-one return in the units the leaderboard adds up.</p>
+          </div>
+        </div>
+        <div class="card fill">
+          <div class="cbar blu"><span>Decision</span><span>two submissions, one default</span></div>
+          <div class="cbody" style="padding-top:.6cqw">
+            <table>
+              <thead><tr><th>Operating point</th><th class="num">Recall</th><th class="num">F1</th><th class="num">Comp.</th></tr></thead>
+              <tbody>
+                <tr class="win"><td><b>Recall-first</b> <span class="tag mag">default</span></td><td class="num">1.000</td><td class="num">0.519</td><td class="num"><b>0.411</b></td></tr>
+                <tr><td><b>F1-balanced</b> <span class="tag">alt</span></td><td class="num">0.520</td><td class="num">0.657</td><td class="num">0.219</td></tr>
+              </tbody>
+            </table>
+            <p><b>Full disclosure:</b> at threshold 0.06 the optimum is degenerate &mdash; it flags <em>every</em> athlete, so the classifier contributes nothing to the score. We ship it because it maximises the metric as written, and we ship the F1-balanced file alongside in case Task A is graded on its own.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">08 / Strategy</span>
+  </div>
+</section>
+
+<!-- ========================================================= 09 RESULTS -->
+<section class="slide" id="s9">
+  <span class="eyebrow">Evaluation &amp; Results</span>
+  <div class="head">
+    <h1 class="title">Out-of-fold,<br>both ways scored</h1>
+    <div class="signum">09</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    Every number is 5-fold out-of-fold on 3,000 athletes. Timing is reported <strong>twice</strong>: on hits only, and with the 30-day miss penalty applied &mdash; because those differ everywhere except at our operating point, and hiding the difference would undercut the whole argument.
+  </div>
+
+  <div class="body">
+    <div class="grid g5">
+      <div class="stat"><div class="v ink sm">0.767</div><div class="k">ROC-AUC</div></div>
+      <div class="stat"><div class="v ink sm">0.754</div><div class="k">PR-AUC</div></div>
+      <div class="stat"><div class="v sm">0.657</div><div class="k">Best F1 @ thr 0.37</div></div>
+      <div class="stat"><div class="v sm">2.61</div><div class="k">Onset MAE, days</div></div>
+      <div class="stat"><div class="v sm">0.411</div><div class="k">Composite @ default</div></div>
+    </div>
+
+    <div class="grid g21 fill">
+      <div class="card">
+        <div class="cbar"><span>Top features by gain</span><span>bar length &prop; &radic;gain</span></div>
+        <div class="cbody chartwrap" style="gap:.25cqw">
+          <svg class="chart" viewBox="0 0 600 200" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Feature importance led by the 3-to-21-day acute chronic ratio at 8729 gain, then resting heart rate 7-day delta at 1906 and acute 7-day load at 1505.">
+            <g font-size="9">
+              <text x="0" y="13"  fill="var(--ink)" font-weight="600">acwr_3_21</text>
+              <rect x="146" y="5"   width="424" height="11" fill="var(--mag)"/><text x="576" y="14" font-weight="600" fill="var(--ink)">8729</text>
+              <text x="0" y="34"  fill="var(--ink)">rhr_last7_delta</text>
+              <rect x="146" y="26"  width="198" height="11" fill="var(--blu)"/><text x="350" y="35">1906</text>
+              <text x="0" y="55"  fill="var(--ink)">acute_load7</text>
+              <rect x="146" y="47"  width="176" height="11" fill="var(--mag)"/><text x="328" y="56">1505</text>
+              <text x="0" y="76"  fill="var(--ink)">team_id</text>
+              <rect x="146" y="68"  width="112" height="11" fill="var(--ink)"/><text x="264" y="77">605</text>
+              <text x="0" y="97"  fill="var(--ink)">sleep_slope</text>
+              <rect x="146" y="89"  width="89"  height="11" fill="var(--grn)"/><text x="241" y="98">387</text>
+              <text x="0" y="118" fill="var(--ink)">start_hour_mean</text>
+              <rect x="146" y="110" width="85"  height="11" fill="var(--ink)"/><text x="237" y="119">348</text>
+              <text x="0" y="139" fill="var(--ink)">rhr_std</text>
+              <rect x="146" y="131" width="82"  height="11" fill="var(--blu)"/><text x="234" y="140">327</text>
+              <text x="0" y="160" fill="var(--ink)">sleep_last7_delta</text>
+              <rect x="146" y="152" width="76"  height="11" fill="var(--grn)"/><text x="228" y="161">280</text>
+              <text x="0" y="181" fill="var(--ink)">load_wow_max_jump</text>
+              <rect x="146" y="173" width="75"  height="11" fill="var(--mag)"/><text x="227" y="182">276</text>
+            </g>
+          </svg>
+          <div class="legend">
+            <span><i style="background:var(--mag)"></i>Load ratio</span>
+            <span><i style="background:var(--blu)"></i>Autonomic</span>
+            <span><i style="background:var(--grn)"></i>Recovery</span>
+            <span><i style="background:var(--ink)"></i>Context</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card">
+          <div class="cbar mag"><span>Skill: hits-only vs penalty-included</span><span>injured athletes only</span></div>
+          <div class="cbody" style="padding-top:.6cqw">
+            <table>
+              <thead><tr><th>Target</th><th class="num">Base MAE</th><th class="num">Hits MAE</th><th class="num">Hits skill</th><th class="num">Scored @0.06</th><th class="num">Scored @0.37</th></tr></thead>
+              <tbody>
+                <tr><td><b>onset</b></td><td class="num">7.61</td><td class="num">2.61</td><td class="num" style="color:var(--grn)">0.657</td><td class="num" style="color:var(--grn)">0.657</td><td class="num" style="color:var(--amb)">0.000</td></tr>
+                <tr><td><b>recovery</b></td><td class="num">3.24</td><td class="num">3.06</td><td class="num" style="color:var(--amb)">0.055</td><td class="num" style="color:var(--amb)">0.055</td><td class="num" style="color:var(--amb)">0.000</td></tr>
+              </tbody>
+            </table>
+            <p>Equal at 0.06 <em>only because</em> recall is 1.000. At the F1 peak, half the injuries are missed and <b>both skills collapse to zero</b>.</p>
+          </div>
+        </div>
+        <div class="card fill">
+          <div class="cbar yel"><span>What we are not claiming</span><span>honest limits</span></div>
+          <div class="cbody">
+            <ul class="tick ink">
+              <li><b>Recovery is near-unlearnable</b> &mdash; best |r| = 0.058, so 0.055 is near the ceiling.</li>
+              <li><b>The default flags every athlete</b> &mdash; the composite optimum is degenerate and the classifier earns nothing at it.</li>
+              <li><b>Pruning is not free:</b> &minus;0.002 composite for +0.010 F1, an official target.</li>
+              <li><b>No test labels exist</b> &mdash; all figures are cross-validated.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">09 / Results</span>
+  </div>
+</section>
+
+<!-- ========================================================= 10 ROADMAP -->
+<section class="slide" id="s10">
+  <span class="eyebrow blu">Impact &amp; Round 2</span>
+  <div class="head">
+    <h1 class="title">From leaderboard<br>to touchline</h1>
+    <div class="signum">10</div>
+  </div>
+  <div class="rule"></div>
+
+  <div class="lede">
+    A ranked risk board is more useful to a coach than a binary label. The same model that produces the submission produces a <strong>daily watchlist with the reason attached</strong> &mdash; and every feature it uses is one a coach can act on.
+  </div>
+
+  <div class="body">
+    <div class="grid g3">
+      <div class="card">
+        <div class="cbar mag"><span>Practicality</span><span>runs today</span></div>
+        <div class="cbody">
+          <h3 class="ch">Deployable now</h3>
+          <ul class="tick">
+            <li>End-to-end in <b>~6 min</b> on a laptop CPU; no GPU, no external services</li>
+            <li>pandas + LightGBM + scikit-learn only</li>
+            <li>Inference for a new athlete is a single 100-column row</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar blu"><span>Scalability</span><span>linear</span></div>
+        <div class="cbody">
+          <h3 class="ch">Scales by athlete</h3>
+          <ul class="tick blu">
+            <li>Feature build is <b>O(n)</b> and per-athlete independent &mdash; trivially parallel across a squad or a league</li>
+            <li>Rolling windows recompute incrementally; a nightly job replaces the batch</li>
+            <li>Saved ensemble is a few MB &mdash; deployable on-prem at a club</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cbar"><span>Impact</span><span>decisions it changes</span></div>
+        <div class="cbody">
+          <h3 class="ch">Who acts on it</h3>
+          <ul class="tick ink">
+            <li>Rank the squad by risk, then <b>deload the top decile</b> before the ramp completes</li>
+            <li>Onset to <b>&plusmn;2.6 days</b> lets medical staff pre-book scans and plan rotation</li>
+            <li>Attribution names the cause: ramp, monotony, RHR drift or sleep debt</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2 fill">
+      <div class="card">
+        <div class="cbar yel"><span>Round 2 build plan</span><span>prioritised</span></div>
+        <div class="cbody" style="gap:.42cqw">
+          <div class="nrow"><div class="nbadge mag">1</div><div><p class="lead"><b>Discrete-time hazard model.</b> Onset day is a time-to-event target. A per-day hazard over days 31&ndash;60 makes Tasks A and B <em>the same model</em> &mdash; the survival curve yields both the probability and the expected day, so consistency is guaranteed rather than patched on.</p></div></div>
+          <div class="nrow"><div class="nbadge blu">2</div><div><p class="lead"><b>Quantile regression for recovery.</b> Given the weak signal, an 80% interval beats a point estimate.</p></div></div>
+          <div class="nrow"><div class="nbadge">3</div><div><p class="lead"><b>Model the latent directly.</b> Correlation pruning is tested and <em>rejected</em> &mdash; it costs up to <b>0.011 AUC</b> and never improves onset MAE; best case, unchanged. The open lever is the reverse: estimate the shared ramp factor explicitly, plus a sequence encoder over the raw 30&times;24 grid.</p></div></div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="callout blu">
+          <div class="ct">Also queued</div>
+          <p>Per-sport calibration &middot; SHAP &middot; group-aware CV &middot; seed ensembling. <b>Ask the organisers:</b> are Tasks A and B combined or scored separately? That decides the primary file.</p>
+        </div>
+        <div class="card fill">
+          <div class="cbar"><span>Submission package</span><span>reproducible</span></div>
+          <div class="cbody">
+            <ul class="tick ink">
+              <li><b>Pipeline</b> &mdash; <code>build_features</code>, <code>train_model</code>, <code>predict</code></li>
+              <li><b>Evidence</b> &mdash; <code>eda_profile</code>, <code>benchmark_models</code>, <code>collinearity</code>, <code>--no-prune</code> ablation</li>
+              <li><b>Artefacts</b> &mdash; saved ensemble, both submissions, metrics JSON, deck as PDF + PPTX via <code>export_deck</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Loadcast &nbsp;|&nbsp; PlayHack ML Track</span>
+    <span class="pg">10 / Roadmap</span>
+  </div>
+</section>
+
+</div>
