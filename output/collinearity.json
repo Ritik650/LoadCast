@@ -1,0 +1,121 @@
+{
+  "block_min_abs_corr": 0.7952532621539244,
+  "block_median_abs_corr": 0.9231436804275683,
+  "n_pairs_over_098": 70,
+  "top_pairs": [
+    {
+      "a": "n_sessions",
+      "b": "active_days",
+      "r": 1.0
+    },
+    {
+      "a": "n_sessions",
+      "b": "rest_days_total",
+      "r": 1.0
+    },
+    {
+      "a": "active_days",
+      "b": "rest_days_total",
+      "r": 1.0
+    },
+    {
+      "a": "TotalSteps_mean",
+      "b": "TotalDistance_mean",
+      "r": 1.0
+    },
+    {
+      "a": "TotalSteps_std",
+      "b": "TotalDistance_std",
+      "r": 1.0
+    },
+    {
+      "a": "TotalSteps_max",
+      "b": "TotalDistance_max",
+      "r": 1.0
+    },
+    {
+      "a": "VeryActiveMinutes_mean",
+      "b": "hi_frac_mean",
+      "r": 1.0
+    },
+    {
+      "a": "rhr_slope",
+      "b": "rhr_rise_x_load",
+      "r": 0.9995
+    },
+    {
+      "a": "monotony",
+      "b": "strain",
+      "r": 0.9995
+    },
+    {
+      "a": "acwr_7_28",
+      "b": "last7_vs_prev21",
+      "r": 0.9993
+    },
+    {
+      "a": "wt_bmi",
+      "b": "bmi_base",
+      "r": 0.9992
+    },
+    {
+      "a": "LightlyActiveMinutes_mean",
+      "b": "load_mean",
+      "r": 0.999
+    }
+  ],
+  "abs_corr_vs_onset": {
+    "monotony": 0.855,
+    "strain": 0.854,
+    "acwr_3_21": 0.855,
+    "rhr_last7_delta": 0.855,
+    "hrr_slope": 0.851,
+    "load_slope": 0.83,
+    "acwr_7_28": 0.851,
+    "hrmean_slope": 0.85,
+    "sleep_slope": 0.81,
+    "acute_load7": 0.843,
+    "last7_vs_prev21": 0.848
+  },
+  "pc1_variance_share": 0.927794791496393,
+  "prune_sweep": {
+    "shipped": {
+      "features": 96,
+      "auc": 0.7653523809523809,
+      "f1": 0.6501854140914709,
+      "onset_mae": 2.617142857142857
+    },
+    "r>0.995": {
+      "features": 77,
+      "auc": 0.7633736263736264,
+      "f1": 0.6504347826086957,
+      "onset_mae": 2.617142857142857
+    },
+    "r>0.990": {
+      "features": 74,
+      "auc": 0.7595606837606838,
+      "f1": 0.6448880822746521,
+      "onset_mae": 2.619047619047619
+    },
+    "r>0.980": {
+      "features": 61,
+      "auc": 0.7541084249084249,
+      "f1": 0.6455542021924482,
+      "onset_mae": 2.618095238095238
+    },
+    "r>0.950": {
+      "features": 43,
+      "auc": 0.7580700854700855,
+      "f1": 0.6477483035163479,
+      "onset_mae": 2.7057142857142855
+    }
+  },
+  "headroom_ladder": {
+    "mean baseline": 7.614793650793652,
+    "linear on acwr_3_21": 3.4495238095238094,
+    "LGBM on acwr_3_21": 3.4323809523809525,
+    "LGBM on PC1 of block": 2.922857142857143,
+    "LGBM on 11-feature block": 2.7085714285714286,
+    "LGBM on all numeric": 2.6352380952380954
+  }
+}
