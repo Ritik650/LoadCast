@@ -1,0 +1,106 @@
+{
+  "n_features": 108,
+  "auc": 0.7619025641025641,
+  "pr_auc": 0.7501134164481988,
+  "f1_at_best_f1": 0.6466992665036675,
+  "thr_best_f1": 0.39,
+  "f1_at_composite": 0.5190311418685121,
+  "thr_composite": 0.06,
+  "recall_composite": 1.0,
+  "mae_onset_hits": 2.6028571428571428,
+  "mae_recov_hits": 3.0428571428571427,
+  "mae_base_onset": 7.614793650793652,
+  "mae_base_recov": 3.241648979591837,
+  "skill_onset_clean": 0.6581841528186572,
+  "skill_recov_clean": 0.06132429451375232,
+  "skill_onset_scored": 0.6581841528186572,
+  "skill_recov_scored": 0.06132429451375232,
+  "composite": 0.41284652973364055,
+  "cliff_thr": 0.24,
+  "cliff_recall": 0.7961904761904762,
+  "cliff_mae_onset": 7.859047619047619,
+  "pruning_enabled": false,
+  "pos_rate_train": 0.35,
+  "top_features": [
+    {
+      "feature": "acwr_3_21",
+      "gain": 7809.262365743518
+    },
+    {
+      "feature": "acute_load7",
+      "gain": 1400.3587697386743
+    },
+    {
+      "feature": "rhr_last7_delta",
+      "gain": 665.3507467389106
+    },
+    {
+      "feature": "team_id",
+      "gain": 521.4455624103546
+    },
+    {
+      "feature": "last7_vs_prev21",
+      "gain": 418.54533800929784
+    },
+    {
+      "feature": "rhr_slope",
+      "gain": 358.1724094472826
+    },
+    {
+      "feature": "hrr_slope",
+      "gain": 341.4781340152025
+    },
+    {
+      "feature": "sleep_slope",
+      "gain": 301.3886309802532
+    },
+    {
+      "feature": "start_hour_mean",
+      "gain": 271.32477269284425
+    },
+    {
+      "feature": "rhr_std",
+      "gain": 251.52114063156768
+    },
+    {
+      "feature": "sleep_last7_delta",
+      "gain": 224.94926813989878
+    },
+    {
+      "feature": "sleep_std",
+      "gain": 190.9211020283401
+    },
+    {
+      "feature": "max_day_z",
+      "gain": 190.44313466325403
+    },
+    {
+      "feature": "load_wow_max_jump",
+      "gain": 190.0368558779359
+    },
+    {
+      "feature": "acwr_7_28",
+      "gain": 183.72162711843848
+    },
+    {
+      "feature": "start_hour_std",
+      "gain": 166.39962523952127
+    },
+    {
+      "feature": "wt_bmi",
+      "gain": 151.0443766117096
+    },
+    {
+      "feature": "bmi_base",
+      "gain": 146.75568652302027
+    },
+    {
+      "feature": "VeryActiveMinutes_std",
+      "gain": 145.86273911371828
+    },
+    {
+      "feature": "LightlyActiveMinutes_std",
+      "gain": 143.55236712694168
+    }
+  ]
+}

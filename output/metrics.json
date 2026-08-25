@@ -1,0 +1,106 @@
+{
+  "n_features": 100,
+  "auc": 0.7668131868131869,
+  "pr_auc": 0.7544794567684882,
+  "f1_at_best_f1": 0.6570397111913358,
+  "thr_best_f1": 0.37,
+  "f1_at_composite": 0.5192878338278932,
+  "thr_composite": 0.06,
+  "recall_composite": 1.0,
+  "mae_onset_hits": 2.6104761904761906,
+  "mae_recov_hits": 3.0619047619047617,
+  "mae_base_onset": 7.614793650793652,
+  "mae_base_recov": 3.241648979591837,
+  "skill_onset_clean": 0.6571835941734134,
+  "skill_recov_clean": 0.055448390254057456,
+  "skill_onset_scored": 0.6571835941734134,
+  "skill_recov_scored": 0.055448390254057456,
+  "composite": 0.4106399394184547,
+  "cliff_thr": 0.21,
+  "cliff_recall": 0.8047619047619048,
+  "cliff_mae_onset": 7.642857142857143,
+  "pruning_enabled": true,
+  "pos_rate_train": 0.35,
+  "top_features": [
+    {
+      "feature": "acwr_3_21",
+      "gain": 8728.720844976604
+    },
+    {
+      "feature": "rhr_last7_delta",
+      "gain": 1905.6550399571656
+    },
+    {
+      "feature": "acute_load7",
+      "gain": 1505.4696927025914
+    },
+    {
+      "feature": "team_id",
+      "gain": 605.3874771595001
+    },
+    {
+      "feature": "sleep_slope",
+      "gain": 386.5689206726849
+    },
+    {
+      "feature": "start_hour_mean",
+      "gain": 347.69202689528464
+    },
+    {
+      "feature": "rhr_std",
+      "gain": 326.85640036575495
+    },
+    {
+      "feature": "sleep_last7_delta",
+      "gain": 279.93522407719865
+    },
+    {
+      "feature": "load_wow_max_jump",
+      "gain": 276.48816410712897
+    },
+    {
+      "feature": "acwr_7_28",
+      "gain": 264.0094148218632
+    },
+    {
+      "feature": "max_day_z",
+      "gain": 251.88677808493375
+    },
+    {
+      "feature": "bmi_base",
+      "gain": 242.61908842623234
+    },
+    {
+      "feature": "sleep_std",
+      "gain": 238.26622510105372
+    },
+    {
+      "feature": "hrr_slope",
+      "gain": 220.43576831668616
+    },
+    {
+      "feature": "start_hour_std",
+      "gain": 208.11783040612937
+    },
+    {
+      "feature": "rhr_rise_x_load",
+      "gain": 201.17035528421403
+    },
+    {
+      "feature": "position",
+      "gain": 196.3043869972229
+    },
+    {
+      "feature": "VeryActiveMinutes_std",
+      "gain": 193.70521366894246
+    },
+    {
+      "feature": "steps_slope",
+      "gain": 191.38661316633224
+    },
+    {
+      "feature": "wt_bmi",
+      "gain": 184.73971414268016
+    }
+  ]
+}
